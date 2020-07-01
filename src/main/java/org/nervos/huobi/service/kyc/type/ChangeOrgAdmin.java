@@ -1,4 +1,4 @@
-package org.nervos.huobi.service.governance.type;
+package org.nervos.huobi.service.kyc.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class U64Result {
-    private String inner;
+public class ChangeOrgAdmin {
+    private String name;
+    private String new_admin;
 }

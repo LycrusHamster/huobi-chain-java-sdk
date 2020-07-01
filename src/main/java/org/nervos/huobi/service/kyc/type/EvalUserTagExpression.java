@@ -1,13 +1,13 @@
-package org.nervos.huobi.service.governance.type;
+package org.nervos.huobi.service.kyc.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressResult {
-    private String inner;
+public class EvalUserTagExpression {
+    private String user;
+    private String expression;
 }

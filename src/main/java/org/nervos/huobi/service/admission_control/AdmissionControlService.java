@@ -1,12 +1,12 @@
 package org.nervos.huobi.service.admission_control;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.nervos.huobi.service.admission_control.type.AddressList;
 import org.nervos.huobi.service.admission_control.type.NewAdmin;
 import org.nervos.huobi.service.admission_control.type.StatusList;
 import org.nervos.muta.Muta;
-import org.nervos.muta.util.Util;
 
 import java.io.IOException;
 
@@ -22,19 +22,21 @@ public class AdmissionControlService {
     public static final String METHOD_PERMIT = "permit";
 
     public StatusList status(AddressList addressList) throws IOException {
-        StatusList statusList = muta.queryService(SERVICE_NAME,METHOD_STATUS,addressList,StatusList.class);
+        StatusList statusList = muta.queryService(SERVICE_NAME, METHOD_STATUS, addressList, new TypeReference<StatusList>() {
+        });
         return statusList;
     }
 
     public void change_admin(NewAdmin newAdmin) throws IOException {
-        muta.sendTransactionAndPollResult(SERVICE_NAME,METHOD_CHANGE_ADMIN,newAdmin, Util.MutaVoid.class);
+        muta.sendTransactionAndPollResult(SERVICE_NAME, METHOD_CHANGE_ADMIN, newAdmin, new TypeReference<Void>() {});
     }
 
     public void forbid(AddressList addressList) throws IOException {
-        muta.sendTransactionAndPollResult(SERVICE_NAME,METHOD_FORBID,addressList, Util.MutaVoid.class);
+        muta.sendTransactionAndPollResult(SERVICE_NAME, METHOD_FORBID, addressList, new TypeReference<Void>() {});
     }
 
     public void permit(AddressList addressList) throws IOException {
-        muta.sendTransactionAndPollResult(SERVICE_NAME,METHOD_PERMIT,addressList, Util.MutaVoid.class);
+        muta.sendTransactionAndPollResult(SERVICE_NAME, METHOD_PERMIT, addressList, new TypeReference<Void>() {});
     }
+
 }
