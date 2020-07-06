@@ -1,5 +1,6 @@
-package org.nervos.huobi.service.kyc.type;
+package org.nervos.huobi.service.riscv.type;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EvalUserTagExpression {
-  private String user;
-  private String expression;
+public class AddressList {
+  private List<String> addresses;
 }

@@ -1,4 +1,4 @@
-package org.nervos.huobi.service.kyc.type;
+package org.nervos.huobi.service.huobi_asset.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EvalUserTagExpression {
-  private String user;
-  private String expression;
+public class GetAssetPayload {
+  private String id;
 }

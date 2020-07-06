@@ -1,5 +1,6 @@
 plugins {
-    id 'java'
+    id 'java-library'
+    id 'com.github.sherter.google-java-format' version '0.9'
 }
 
 group 'org.nervos'
@@ -12,7 +13,7 @@ repositories {
 
 dependencies {
 
-    implementation 'org.nervos:muta-sdk-java:1.0-SNAPSHOT'
+    api "org.nervos:muta-sdk-java:1.0-SNAPSHOT"
 
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.12'

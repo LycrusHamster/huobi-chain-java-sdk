@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChangeOrgApproved {
-    private String org_name;
-    private boolean approved;
+  private String org_name;
+  private boolean approved;
 }

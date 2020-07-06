@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetUserTags {
-    private String org_name;
-    private String user;
+  private String org_name;
+  private String user;
 }
