@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StatusList {
-  private List<Boolean> status;
+    private List<Boolean> status;
 }

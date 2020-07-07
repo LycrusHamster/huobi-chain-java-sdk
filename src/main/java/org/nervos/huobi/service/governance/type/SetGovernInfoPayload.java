@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SetGovernInfoPayload {
-  private GovernanceInfo inner;
+    private GovernanceInfo inner;
 }

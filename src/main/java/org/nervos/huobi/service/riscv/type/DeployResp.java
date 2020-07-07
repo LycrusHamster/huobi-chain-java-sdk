@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeployResp {
-  private String address;
-  private String init_ret;
+    private String address;
+    private String init_ret;
 }

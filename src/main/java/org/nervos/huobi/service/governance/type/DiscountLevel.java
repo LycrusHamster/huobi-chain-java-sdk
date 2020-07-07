@@ -9,6 +9,6 @@ import org.nervos.muta.client.type.primitive.U64;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DiscountLevel {
-  private U64 threshold;
-  private U64 discount_percent;
+    private U64 threshold;
+    private U64 discount_percent;
 }

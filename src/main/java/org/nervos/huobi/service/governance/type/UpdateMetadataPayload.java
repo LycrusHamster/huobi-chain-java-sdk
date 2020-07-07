@@ -11,15 +11,15 @@ import org.nervos.muta.client.type.primitive.ValidatorExtend;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateMetadataPayload {
-  private Vector<ValidatorExtend> verifier_list;
-  private U64 interval;
-  private U64 propose_ratio;
-  private U64 prevote_ratio;
-  private U64 precommit_ratio;
-  private U64 brake_ratio;
-  private U64 timeout_gap;
-  private U64 cycles_limit;
-  private U64 cycles_price;
-  private U64 tx_num_limit;
-  private U64 max_tx_size;
+    private Vector<ValidatorExtend> verifier_list;
+    private U64 interval;
+    private U64 propose_ratio;
+    private U64 prevote_ratio;
+    private U64 precommit_ratio;
+    private U64 brake_ratio;
+    private U64 timeout_gap;
+    private U64 cycles_limit;
+    private U64 cycles_price;
+    private U64 tx_num_limit;
+    private U64 max_tx_size;
 }

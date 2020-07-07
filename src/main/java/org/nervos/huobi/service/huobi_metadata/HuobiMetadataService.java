@@ -11,21 +11,25 @@ import org.nervos.muta.client.type.primitive.Metadata;
 @AllArgsConstructor
 @Getter
 public class HuobiMetadataService {
-  private final Muta muta;
+    private final Muta muta;
 
-  public static final String SERVICE_NAME = "metadata";
-  public static final String METHOD_GET_METADATA = "get_metadata";
-  public static final String METHOD_UPDATE_METADATA = "update_metadata";
+    public static final String SERVICE_NAME = "metadata";
+    public static final String METHOD_GET_METADATA = "get_metadata";
+    public static final String METHOD_UPDATE_METADATA = "update_metadata";
 
-  public Metadata getMetadata() throws IOException {
-    Metadata metadata =
-        muta.queryService(SERVICE_NAME, METHOD_GET_METADATA, new TypeReference<Metadata>() {});
+    public Metadata getMetadata() throws IOException {
+        Metadata metadata =
+                muta.queryService(
+                        SERVICE_NAME, METHOD_GET_METADATA, new TypeReference<Metadata>() {});
 
-    return metadata;
-  }
+        return metadata;
+    }
 
-  public void update_metadata(UpdateMetadataPayload updateMetadataPayload) throws IOException {
-    muta.sendTransactionAndPollResult(
-        SERVICE_NAME, METHOD_UPDATE_METADATA, updateMetadataPayload, new TypeReference<Void>() {});
-  }
+    public void update_metadata(UpdateMetadataPayload updateMetadataPayload) throws IOException {
+        muta.sendTransactionAndPollResult(
+                SERVICE_NAME,
+                METHOD_UPDATE_METADATA,
+                updateMetadataPayload,
+                new TypeReference<Void>() {});
+    }
 }

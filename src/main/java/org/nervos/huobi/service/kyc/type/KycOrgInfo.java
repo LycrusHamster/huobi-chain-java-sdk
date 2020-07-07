@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KycOrgInfo {
-  private String name;
-  private String description;
-  private String admin;
-  private List<String> supported_tags;
-  private boolean approved;
+    private String name;
+    private String description;
+    private String admin;
+    private List<String> supported_tags;
+    private boolean approved;
 }

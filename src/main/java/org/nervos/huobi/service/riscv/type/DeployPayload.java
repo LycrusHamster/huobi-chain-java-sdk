@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeployPayload {
-  private String code;
-  private InterpreterType intp_type;
-  private String init_args;
+    private String code;
+    private InterpreterType intp_type;
+    private String init_args;
 }

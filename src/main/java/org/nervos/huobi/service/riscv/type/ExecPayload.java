@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExecPayload {
-  private String address;
-  private String args;
+    private String address;
+    private String args;
 }

@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransferFromPayload {
-  private String asset_id;
-  private String sender;
-  private String recipient;
-  private BigInteger value;
+    private String asset_id;
+    private String sender;
+    private String recipient;
+    private BigInteger value;
 }

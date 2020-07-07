@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChangeOrgAdmin {
-  private String name;
-  private String new_admin;
+    private String name;
+    private String new_admin;
 }

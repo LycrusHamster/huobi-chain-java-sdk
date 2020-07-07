@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterNewOrg {
-  private String name;
-  private String description;
-  private String admin;
-  private List<String> supported_tags;
+    private String name;
+    private String description;
+    private String admin;
+    private List<String> supported_tags;
 }

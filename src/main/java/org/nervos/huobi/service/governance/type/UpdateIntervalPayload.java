@@ -9,5 +9,5 @@ import org.nervos.muta.client.type.primitive.U64;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateIntervalPayload {
-  private U64 interval;
+    private U64 interval;
 }

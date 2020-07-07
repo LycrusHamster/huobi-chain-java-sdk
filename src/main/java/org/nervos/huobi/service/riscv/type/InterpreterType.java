@@ -4,6 +4,6 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum InterpreterType {
-  Binary,
-  Duktape,
+    Binary,
+    Duktape,
 }

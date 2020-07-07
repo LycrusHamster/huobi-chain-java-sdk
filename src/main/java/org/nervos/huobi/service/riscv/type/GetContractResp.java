@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetContractResp {
 
-  private String code_hash;
-  private InterpreterType intp_type;
-  private String code;
-  private List<String> storage_values;
-  private String authorizer;
+    private String code_hash;
+    private InterpreterType intp_type;
+    private String code;
+    private List<String> storage_values;
+    private String authorizer;
 }

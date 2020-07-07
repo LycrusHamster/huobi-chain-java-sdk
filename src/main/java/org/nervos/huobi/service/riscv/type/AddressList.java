@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressList {
-  private List<String> addresses;
+    private List<String> addresses;
 }

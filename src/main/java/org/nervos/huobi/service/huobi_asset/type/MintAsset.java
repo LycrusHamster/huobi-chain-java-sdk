@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MintAsset {
-  private String asset_id;
-  private String to;
-  private BigInteger amount;
-  private String proof;
-  private String memo;
+    private String asset_id;
+    private String to;
+    private BigInteger amount;
+    private String proof;
+    private String memo;
 }

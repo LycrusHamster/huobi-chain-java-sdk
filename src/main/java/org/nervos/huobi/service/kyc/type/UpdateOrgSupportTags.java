@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateOrgSupportTags {
-  private String org_name;
-  private List<String> supported_tags;
+    private String org_name;
+    private List<String> supported_tags;
 }

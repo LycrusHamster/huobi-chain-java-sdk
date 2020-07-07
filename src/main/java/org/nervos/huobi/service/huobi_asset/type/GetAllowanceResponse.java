@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetAllowanceResponse {
-  private String asset_id;
-  private String grantor;
-  private String grantee;
-  private BigInteger value;
+    private String asset_id;
+    private String grantor;
+    private String grantee;
+    private BigInteger value;
 }

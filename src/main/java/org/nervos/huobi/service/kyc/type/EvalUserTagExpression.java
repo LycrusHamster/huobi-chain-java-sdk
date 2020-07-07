@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EvalUserTagExpression {
-  private String user;
-  private String expression;
+    private String user;
+    private String expression;
 }

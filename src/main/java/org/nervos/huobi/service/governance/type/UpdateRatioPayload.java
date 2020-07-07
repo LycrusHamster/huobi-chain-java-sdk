@@ -9,8 +9,8 @@ import org.nervos.muta.client.type.primitive.U64;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateRatioPayload {
-  private U64 propose_ratio;
-  private U64 prevote_ratio;
-  private U64 precommit_ratio;
-  private U64 brake_ratio;
+    private U64 propose_ratio;
+    private U64 prevote_ratio;
+    private U64 precommit_ratio;
+    private U64 brake_ratio;
 }

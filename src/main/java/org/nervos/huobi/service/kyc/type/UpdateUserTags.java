@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateUserTags {
-  private String org_name;
-  private String user;
-  private Map<String, List<String>> tags;
+    private String org_name;
+    private String user;
+    private Map<String, List<String>> tags;
 }

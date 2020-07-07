@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetContractPayload {
-  private String address;
-  private boolean get_code;
-  private List<String> storage_keys;
+    private String address;
+    private boolean get_code;
+    private List<String> storage_keys;
 }

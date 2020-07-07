@@ -11,6 +11,15 @@ repositories {
     mavenLocal()
 }
 
+compileJava.dependsOn(tasks.googleJavaFormat)
+compileTestJava.dependsOn(tasks.googleJavaFormat)
+verifyGoogleJavaFormat.mustRunAfter(tasks.googleJavaFormat)
+
+googleJavaFormat {
+    options style: 'AOSP'
+}
+
+
 dependencies {
 
     api "org.nervos:muta-sdk-java:1.0-SNAPSHOT"

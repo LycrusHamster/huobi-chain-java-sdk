@@ -10,5 +10,5 @@ import org.nervos.muta.client.type.primitive.ValidatorExtend;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateValidatorsPayload {
-  private Vector<ValidatorExtend> verifier_list;
+    private Vector<ValidatorExtend> verifier_list;
 }
