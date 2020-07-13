@@ -14,4 +14,5 @@ public class ApprovePayload {
     private Hash asset_id;
     private Address to;
     private U64 value;
+    private String memo;
 }

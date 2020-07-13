@@ -17,4 +17,5 @@ public class Asset {
     private U64 supply;
     private U64 precision;
     private Address issuer;
+    private boolean relayable;
 }

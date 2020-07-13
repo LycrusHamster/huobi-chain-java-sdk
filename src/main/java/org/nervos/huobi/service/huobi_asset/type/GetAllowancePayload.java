@@ -3,12 +3,14 @@ package org.nervos.huobi.service.huobi_asset.type;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.nervos.muta.client.type.primitive.Address;
+import org.nervos.muta.client.type.primitive.Hash;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetAllowancePayload {
-    private String asset_id;
-    private String grantor;
-    private String grantee;
+    private Hash asset_id;
+    private Address grantor;
+    private Address grantee;
 }

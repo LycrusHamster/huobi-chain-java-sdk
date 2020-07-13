@@ -24,6 +24,7 @@ public class HuobiAssetService {
     public static final String METHOD_CHANGE_ADMIN = "change_admin";
     public static final String METHOD_MINT = "mint";
     public static final String METHOD_BURN = "burn";
+    public static final String METHOD_RELAY = "relay";
 
     public Asset get_native_asset() throws IOException {
         Asset asset =
@@ -91,18 +92,26 @@ public class HuobiAssetService {
                 new TypeReference<Void>() {});
     }
 
-    public void change_admin(NewAdmin newAdmin) throws IOException {
+    public void change_admin(ChangeAdminPayload changeAdminPayload) throws IOException {
         muta.sendTransactionAndPollResult(
-                SERVICE_NAME, METHOD_CHANGE_ADMIN, newAdmin, new TypeReference<Void>() {});
+                SERVICE_NAME,
+                METHOD_CHANGE_ADMIN,
+                changeAdminPayload,
+                new TypeReference<Void>() {});
     }
 
-    public void mint(MintAsset mintAsset) throws IOException {
+    public void mint(MintAssetPayload mintAssetPayload) throws IOException {
         muta.sendTransactionAndPollResult(
-                SERVICE_NAME, METHOD_MINT, mintAsset, new TypeReference<Void>() {});
+                SERVICE_NAME, METHOD_MINT, mintAssetPayload, new TypeReference<Void>() {});
     }
 
-    public void burn(BurnAsset burnAsset) throws IOException {
+    public void burn(BurnAssetPayload burnAssetPayload) throws IOException {
         muta.sendTransactionAndPollResult(
-                SERVICE_NAME, METHOD_BURN, burnAsset, new TypeReference<Void>() {});
+                SERVICE_NAME, METHOD_BURN, burnAssetPayload, new TypeReference<Void>() {});
+    }
+
+    public void relay(RelayAssetPayload relayAssetPayload) throws IOException {
+        muta.sendTransactionAndPollResult(
+                SERVICE_NAME, METHOD_RELAY, relayAssetPayload, new TypeReference<Void>() {});
     }
 }
