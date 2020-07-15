@@ -1,14 +1,27 @@
 plugins {
     id 'java-library'
     id 'com.github.sherter.google-java-format' version '0.9'
+    id 'maven-publish'
+    id "com.jfrog.bintray" version "1.8.5"
 }
 
-group 'org.nervos'
-version '1.0-SNAPSHOT'
+group 'com.huobi'
+version '1.0'
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    //mavenLocal()
+    maven {
+        url  "https://dl.bintray.com/lycrushamster/Muta-Java-SDK"
+    }
+}
+
+java {
+    withSourcesJar()
+}
+
+test {
+    useJUnitPlatform()
 }
 
 compileJava.dependsOn(tasks.googleJavaFormat)
@@ -22,7 +35,7 @@ googleJavaFormat {
 
 dependencies {
 
-    api "org.nervos:muta-sdk-java:1.0-SNAPSHOT"
+    api "org.nervos:muta-sdk-java:1.0"
 
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
@@ -30,5 +43,32 @@ dependencies {
     testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+}
+
+
+bintray {
+    user = pubBintrayUser
+    key = pubBintrayApiKey
+    publications = ['normal']
+    pkg {
+        repo = 'HuobiChain-Java-SDK'
+        name = 'huobi-chain-java-sdk'
+        userOrg = user
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/LycrusHamster/Huobi-sdk-java'
+        desc = 'This is Huobi-Chain JAVA SDK'
+        version {
+            name = '1.0'
+            desc = 'Huobi Chain Java SDK'
+        }
+    }
+}
+
+
+publishing {
+    publications {
+        normal(MavenPublication) {
+            from components.java
+        }
+    }
 }

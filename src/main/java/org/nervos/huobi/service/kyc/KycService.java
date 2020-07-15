@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.nervos.huobi.service.kyc.type.*;
 import org.nervos.muta.Muta;
-import org.nervos.muta.client.type.primitive.Address;
 
 @AllArgsConstructor
 @Getter
@@ -86,7 +85,10 @@ public class KycService {
 
     public void change_service_admin(ChangeServiceAdmin changeServiceAdmin) throws IOException {
         muta.sendTransactionAndPollResult(
-                SERVICE_NAME, METHOD_CHANGE_SERVICE_ADMIN, changeServiceAdmin, new TypeReference<Void>() {});
+                SERVICE_NAME,
+                METHOD_CHANGE_SERVICE_ADMIN,
+                changeServiceAdmin,
+                new TypeReference<Void>() {});
         return;
     }
 
