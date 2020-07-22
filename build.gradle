@@ -6,11 +6,16 @@ plugins {
 }
 
 group 'com.huobi'
-version '1.0'
+version '1.0-jdk1.8'
+
+def muta_version = '1.0-jdk1.8'
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
 
 repositories {
     mavenCentral()
-    //mavenLocal()
+    mavenLocal()
     maven {
         url  "https://dl.bintray.com/lycrushamster/Muta-Java-SDK"
     }
@@ -35,7 +40,7 @@ googleJavaFormat {
 
 dependencies {
 
-    api "org.nervos:muta-sdk-java:1.0"
+    api "org.nervos:muta-sdk-java:${muta_version}"
 
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
@@ -58,7 +63,7 @@ bintray {
         vcsUrl = 'https://github.com/LycrusHamster/Huobi-sdk-java'
         desc = 'This is Huobi-Chain JAVA SDK'
         version {
-            name = '1.0'
+            name = project.version
             desc = 'Huobi Chain Java SDK'
         }
     }
