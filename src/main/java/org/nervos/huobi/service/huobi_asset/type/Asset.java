@@ -14,8 +14,8 @@ public class Asset {
     private Hash id;
     private String name;
     private String symbol;
+    private Address admin;
     private U64 supply;
     private U64 precision;
-    private Address issuer;
     private boolean relayable;
 }

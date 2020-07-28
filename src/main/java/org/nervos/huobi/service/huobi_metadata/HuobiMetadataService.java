@@ -11,11 +11,10 @@ import org.nervos.muta.client.type.primitive.Metadata;
 @AllArgsConstructor
 @Getter
 public class HuobiMetadataService {
-    private final Muta muta;
-
     public static final String SERVICE_NAME = "metadata";
     public static final String METHOD_GET_METADATA = "get_metadata";
     public static final String METHOD_UPDATE_METADATA = "update_metadata";
+    private final Muta muta;
 
     public Metadata getMetadata() throws IOException {
         Metadata metadata =
