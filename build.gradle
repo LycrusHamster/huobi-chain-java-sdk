@@ -6,9 +6,9 @@ plugins {
 }
 
 group 'com.huobi'
-version '1.3'
+version '1.4'
 
-def muta_version = '1.3'
+def muta_version = '1.4'
 
 repositories {
     mavenCentral()
