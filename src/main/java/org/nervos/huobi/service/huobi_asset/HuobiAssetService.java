@@ -4,15 +4,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.nervos.huobi.Huobi;
 import org.nervos.huobi.service.huobi_asset.type.*;
 import org.nervos.muta.EventRegisterEntry;
-import org.nervos.muta.Muta;
 import org.nervos.muta.client.type.ParsedEvent;
 import org.nervos.muta.service.asset.type.ApproveEvent;
 
-@AllArgsConstructor
 @Getter
 public class HuobiAssetService {
     public static final String SERVICE_NAME = "asset";
@@ -42,54 +40,43 @@ public class HuobiAssetService {
     static {
         eventRegistry =
                 Arrays.asList(
+                        new EventRegisterEntry<>(EVENT_CREATE_ASSET, new TypeReference<Asset>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME, EVENT_CREATE_ASSET, new TypeReference<Asset>() {}),
+                                EVENT_TRANSFER_ASSET, new TypeReference<TransferEvent>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_TRANSFER_ASSET,
-                                new TypeReference<TransferEvent>() {}),
+                                EVENT_TRANSFER_FROM, new TypeReference<TransferFromEvent>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_TRANSFER_FROM,
-                                new TypeReference<TransferFromEvent>() {}),
-                        new EventRegisterEntry<>(
-                                SERVICE_NAME,
                                 EVENT_HOOK_TRANSFER_FROM,
                                 new TypeReference<TransferFromEvent>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_APPROVE_ASSET,
-                                new TypeReference<ApproveEvent>() {}),
+                                EVENT_APPROVE_ASSET, new TypeReference<ApproveEvent>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_CHANGE_ADMIN,
-                                new TypeReference<ChangeAdminPayload>() {}),
+                                EVENT_CHANGE_ADMIN, new TypeReference<ChangeAdminPayload>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_MINT_ASSET,
-                                new TypeReference<MintAssetEvent>() {}),
+                                EVENT_MINT_ASSET, new TypeReference<MintAssetEvent>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_BURN_ASSET,
-                                new TypeReference<BurnAssetEvent>() {}),
+                                EVENT_BURN_ASSET, new TypeReference<BurnAssetEvent>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_RELAY_ASSET,
-                                new TypeReference<RelayAssetEvent>() {}));
+                                EVENT_RELAY_ASSET, new TypeReference<RelayAssetEvent>() {}));
     }
 
-    private final Muta muta;
+    private final Huobi huobi;
+
+    public HuobiAssetService(Huobi huobi) {
+        this.huobi = huobi;
+        huobi.register(eventRegistry);
+    }
 
     public Asset get_native_asset() throws IOException {
         Asset asset =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME, METHOD_GET_NATIVE_ASSET, null, new TypeReference<Asset>() {});
         return asset;
     }
 
     public Asset get_asset(GetAssetPayload getAssetPayload) throws IOException {
         Asset asset =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME,
                         METHOD_GET_ASSET,
                         getAssetPayload,
@@ -99,7 +86,7 @@ public class HuobiAssetService {
 
     public GetBalanceResponse get_balance(GetBalancePayload getBalancePayload) throws IOException {
         GetBalanceResponse getBalanceResponse =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME,
                         METHOD_GET_BALANCE,
                         getBalancePayload,
@@ -110,7 +97,7 @@ public class HuobiAssetService {
     public GetAllowanceResponse get_allowance(GetAllowancePayload getAllowancePayload)
             throws IOException {
         GetAllowanceResponse getAllowanceResponse =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME,
                         METHOD_GET_ALLOWANCE,
                         getAllowancePayload,
@@ -121,7 +108,7 @@ public class HuobiAssetService {
     public Asset create_asset(CreateAssetPayload createAssetPayload, List<ParsedEvent<?>> events)
             throws IOException {
         Asset asset =
-                muta.sendTransactionAndPollResult(
+                huobi.sendTransactionAndPollResult(
                         SERVICE_NAME,
                         METHOD_CREATE_ASSET,
                         createAssetPayload,
@@ -132,7 +119,7 @@ public class HuobiAssetService {
 
     public void transfer(TransferPayload transferPayload, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME,
                 METHOD_TRANSFER,
                 transferPayload,
@@ -142,13 +129,13 @@ public class HuobiAssetService {
 
     public void approve(ApprovePayload approvePayload, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_APPROVE, approvePayload, new TypeReference<Void>() {}, events);
     }
 
     public void transfer_from(TransferFromPayload transferFromPayload, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME,
                 METHOD_TRANSFER_FROM,
                 transferFromPayload,
@@ -158,7 +145,7 @@ public class HuobiAssetService {
 
     public void change_admin(ChangeAdminPayload changeAdminPayload, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME,
                 METHOD_CHANGE_ADMIN,
                 changeAdminPayload,
@@ -168,19 +155,19 @@ public class HuobiAssetService {
 
     public void mint(MintAssetPayload mintAssetPayload, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_MINT, mintAssetPayload, new TypeReference<Void>() {}, events);
     }
 
     public void burn(BurnAssetPayload burnAssetPayload, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_BURN, burnAssetPayload, new TypeReference<Void>() {}, events);
     }
 
     public void relay(RelayAssetPayload relayAssetPayload, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME,
                 METHOD_RELAY,
                 relayAssetPayload,

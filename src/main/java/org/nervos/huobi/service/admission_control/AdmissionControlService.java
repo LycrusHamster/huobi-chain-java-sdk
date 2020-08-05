@@ -4,16 +4,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.nervos.huobi.Huobi;
 import org.nervos.huobi.service.admission_control.type.AddressList;
 import org.nervos.huobi.service.admission_control.type.NewAdmin;
 import org.nervos.huobi.service.admission_control.type.StatusList;
 import org.nervos.muta.EventRegisterEntry;
-import org.nervos.muta.Muta;
 import org.nervos.muta.client.type.ParsedEvent;
 
-@AllArgsConstructor
 @Getter
 public class AdmissionControlService {
     public static final String SERVICE_NAME = "admission_control";
@@ -30,18 +28,22 @@ public class AdmissionControlService {
         eventRegistry =
                 Arrays.asList(
                         new EventRegisterEntry<>(
-                                SERVICE_NAME, EVENT_CHANGE_ADMIN, new TypeReference<NewAdmin>() {}),
+                                EVENT_CHANGE_ADMIN, new TypeReference<NewAdmin>() {}),
+                        new EventRegisterEntry<>(EVENT_FORBID, new TypeReference<AddressList>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME, EVENT_FORBID, new TypeReference<AddressList>() {}),
-                        new EventRegisterEntry<>(
-                                SERVICE_NAME, EVENT_PERMIT, new TypeReference<AddressList>() {}));
+                                EVENT_PERMIT, new TypeReference<AddressList>() {}));
     }
 
-    private final Muta muta;
+    private final Huobi huobi;
+
+    public AdmissionControlService(Huobi huobi) {
+        this.huobi = huobi;
+        huobi.register(eventRegistry);
+    }
 
     public StatusList status(AddressList addressList) throws IOException {
         StatusList statusList =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME,
                         METHOD_STATUS,
                         addressList,
@@ -50,17 +52,17 @@ public class AdmissionControlService {
     }
 
     public void change_admin(NewAdmin newAdmin, List<ParsedEvent<?>> events) throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_CHANGE_ADMIN, newAdmin, new TypeReference<Void>() {}, events);
     }
 
     public void forbid(AddressList addressList, List<ParsedEvent<?>> events) throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_FORBID, addressList, new TypeReference<Void>() {}, events);
     }
 
     public void permit(AddressList addressList, List<ParsedEvent<?>> events) throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_PERMIT, addressList, new TypeReference<Void>() {}, events);
     }
 }

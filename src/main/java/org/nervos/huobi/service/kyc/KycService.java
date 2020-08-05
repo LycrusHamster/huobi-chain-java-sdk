@@ -5,14 +5,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.nervos.huobi.Huobi;
 import org.nervos.huobi.service.kyc.type.*;
 import org.nervos.muta.EventRegisterEntry;
-import org.nervos.muta.Muta;
 import org.nervos.muta.client.type.ParsedEvent;
 
-@AllArgsConstructor
 @Getter
 public class KycService {
     public static final String SERVICE_NAME = "kyc";
@@ -38,39 +36,35 @@ public class KycService {
         eventRegistry =
                 Arrays.asList(
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
                                 EVENT_CHANGE_ORG_APPROVED,
                                 new TypeReference<ChangeOrgApproved>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_CHANGE_ORG_ADMIN,
-                                new TypeReference<ChangeOrgAdmin>() {}),
+                                EVENT_CHANGE_ORG_ADMIN, new TypeReference<ChangeOrgAdmin>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_REGISTER_ORG,
-                                new TypeReference<NewOrgEvent>() {}),
+                                EVENT_REGISTER_ORG, new TypeReference<NewOrgEvent>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
                                 EVENT_UPDATE_SUPPORTED_TAG,
                                 new TypeReference<UpdateOrgSupportTags>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_UPDATE_USER_TAG,
-                                new TypeReference<UpdateUserTags>() {}));
+                                EVENT_UPDATE_USER_TAG, new TypeReference<UpdateUserTags>() {}));
     }
 
-    private final Muta muta;
+    private final Huobi huobi;
+
+    public KycService(Huobi huobi) {
+        this.huobi = huobi;
+    }
 
     public List<String> get_orgs() throws IOException {
         List<String> orgNames =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME, METHOD_GET_ORGS, null, new TypeReference<List<String>>() {});
         return orgNames;
     }
 
     public KycOrgInfo get_org_info() throws IOException {
         KycOrgInfo kycOrgInfo =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME,
                         METHOD_GET_ORG_INFO,
                         null,
@@ -80,7 +74,7 @@ public class KycService {
 
     public List<String> get_org_supported_tags() throws IOException {
         List<String> supported_tags =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME,
                         METHOD_GET_ORG_SUPPORTED_TAG,
                         null,
@@ -90,7 +84,7 @@ public class KycService {
 
     public Map<String, List<String>> get_user_tags(GetUserTags getUserTags) throws IOException {
         Map<String, List<String>> user_tags =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME,
                         METHOD_GET_USER_TAGS,
                         null,
@@ -101,7 +95,7 @@ public class KycService {
     public boolean eval_user_tag_expression(EvalUserTagExpression evalUserTagExpression)
             throws IOException {
         boolean ret =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME,
                         METHOD_EVAL_USER_TAG_EXPRESSION,
                         null,
@@ -111,7 +105,7 @@ public class KycService {
 
     public void change_org_approved(
             ChangeOrgApproved changeOrgApproved, List<ParsedEvent<?>> events) throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME,
                 METHOD_CHAGNE_ORG_APPROVED,
                 changeOrgApproved,
@@ -122,7 +116,7 @@ public class KycService {
 
     public void change_service_admin(
             ChangeServiceAdmin changeServiceAdmin, List<ParsedEvent<?>> events) throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME,
                 METHOD_CHANGE_SERVICE_ADMIN,
                 changeServiceAdmin,
@@ -133,7 +127,7 @@ public class KycService {
 
     public void change_org_admin(ChangeOrgAdmin changeOrgAdmin, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME,
                 METHOD_CHANGE_ORG_ADMIN,
                 changeOrgAdmin,
@@ -144,7 +138,7 @@ public class KycService {
 
     public void register_org(RegisterNewOrg registerNewOrg, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME,
                 METHOD_REGISTER_ORG,
                 registerNewOrg,
@@ -156,7 +150,7 @@ public class KycService {
     public void update_supported_tags(
             UpdateOrgSupportTags updateOrgSupportTags, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME,
                 METHOD_UPDATE_SUPPORTED_TAGS,
                 updateOrgSupportTags,
@@ -167,7 +161,7 @@ public class KycService {
 
     public void update_user_tags(UpdateUserTags updateUserTags, List<ParsedEvent<?>> events)
             throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME,
                 METHOD_UPDATE_USER_TAGS,
                 updateUserTags,

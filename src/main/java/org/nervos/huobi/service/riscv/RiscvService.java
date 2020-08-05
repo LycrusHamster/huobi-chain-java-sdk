@@ -4,13 +4,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.nervos.huobi.Huobi;
 import org.nervos.huobi.service.riscv.type.*;
 import org.nervos.muta.EventRegisterEntry;
-import org.nervos.muta.Muta;
 
-@AllArgsConstructor
 @Getter
 public class RiscvService {
     public static final String SERVICE_NAME = "riscv";
@@ -33,35 +31,31 @@ public class RiscvService {
         eventRegistry =
                 Arrays.asList(
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_GRANT_AUTH,
-                                new TypeReference<AddressList>() {}),
+                                EVENT_GRANT_AUTH, new TypeReference<AddressList>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_REVOKE_AUTH,
-                                new TypeReference<AddressList>() {}),
+                                EVENT_REVOKE_AUTH, new TypeReference<AddressList>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_APPROVE_CONTRACT,
-                                new TypeReference<AddressList>() {}),
+                                EVENT_APPROVE_CONTRACT, new TypeReference<AddressList>() {}),
                         new EventRegisterEntry<>(
-                                SERVICE_NAME,
-                                EVENT_REVOKE_CONTRACT,
-                                new TypeReference<AddressList>() {}));
+                                EVENT_REVOKE_CONTRACT, new TypeReference<AddressList>() {}));
     }
 
-    private final Muta muta;
+    private final Huobi huobi;
+
+    public RiscvService(Huobi huobi) {
+        this.huobi = huobi;
+    }
 
     public String call(ExecPayload execPayload) throws IOException {
         String result =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME, METHOD_CALL, execPayload, new TypeReference<String>() {});
         return result;
     }
 
     public AddressList check_deploy_auth(AddressList addressList) throws IOException {
         AddressList approved =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME,
                         METHOD_CHECK_DEPLOY_AUTH,
                         addressList,
@@ -71,7 +65,7 @@ public class RiscvService {
 
     public GetContractResp get_contract(GetContractPayload getContractPayload) throws IOException {
         GetContractResp ret =
-                muta.queryService(
+                huobi.queryService(
                         SERVICE_NAME,
                         METHOD_GET_CONTRACT,
                         getContractPayload,
@@ -81,24 +75,24 @@ public class RiscvService {
 
     public String exec(ExecPayload execPayload) throws IOException {
         String ret =
-                muta.sendTransactionAndPollResult(
+                huobi.sendTransactionAndPollResult(
                         SERVICE_NAME, METHOD_EXEC, execPayload, new TypeReference<String>() {});
         return ret;
     }
 
     public void grant_deploy_auth(AddressList addressList) throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_GRANT_DEPLOY_AUTH, addressList, new TypeReference<Void>() {});
     }
 
     public void revoke_deploy_auth(AddressList addressList) throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_REVOKE_DEPLOY_AUTH, addressList, new TypeReference<Void>() {});
     }
 
     public DeployResp deploy(DeployPayload deployPayload) throws IOException {
         DeployResp ret =
-                muta.sendTransactionAndPollResult(
+                huobi.sendTransactionAndPollResult(
                         SERVICE_NAME,
                         METHOD_DEPLOY,
                         deployPayload,
@@ -107,12 +101,12 @@ public class RiscvService {
     }
 
     public void approve_contracts(AddressList addressList) throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_APPROVE_CONTRACTS, addressList, new TypeReference<Void>() {});
     }
 
     public void revoke_contracts(AddressList addressList) throws IOException {
-        muta.sendTransactionAndPollResult(
+        huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_REVOKE_CONTRACTS, addressList, new TypeReference<Void>() {});
     }
 }
