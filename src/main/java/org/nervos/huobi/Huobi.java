@@ -42,7 +42,7 @@ public class Huobi extends Muta {
                                 ConsumedTxFee.name, new TypeReference<ConsumedTxFee>() {})));
     }
 
-    public Huobi defaultHuobi() {
+    public static Huobi defaultHuobi() {
         return new Huobi(
                 Client.defaultClient(),
                 Account.defaultAccount(),

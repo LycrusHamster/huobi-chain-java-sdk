@@ -10,10 +10,12 @@ import org.nervos.huobi.Huobi;
 import org.nervos.huobi.service.kyc.type.*;
 import org.nervos.muta.EventRegisterEntry;
 import org.nervos.muta.client.type.ParsedEvent;
+import org.nervos.muta.client.type.primitive.Address;
 
 @Getter
 public class KycService {
     public static final String SERVICE_NAME = "kyc";
+    public static final String METHOD_GET_ADMIN = "get_admin";
     public static final String METHOD_GET_ORGS = "get_orgs";
     public static final String METHOD_GET_ORG_INFO = "get_org_info";
     public static final String METHOD_GET_ORG_SUPPORTED_TAG = "get_org_supported_tags";
@@ -168,5 +170,11 @@ public class KycService {
                 new TypeReference<Void>() {},
                 events);
         return;
+    }
+
+    public Address get_admin() throws IOException {
+        Address address =
+                huobi.queryService(SERVICE_NAME, METHOD_GET_ADMIN, new TypeReference<Address>() {});
+        return address;
     }
 }

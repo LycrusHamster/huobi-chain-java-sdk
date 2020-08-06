@@ -13,7 +13,7 @@ import org.nervos.muta.client.type.ParsedEvent;
 @Getter
 public class GovernanceService {
     public static final String SERVICE_NAME = "governance";
-    public static final String METHOD_GET_ADMIN_ADDRESS = "get_admin_address";
+    public static final String METHOD_GET_ADMIN = "get_admin";
     public static final String METHOD_GET_GOVERN_INFO = "get_govern_info";
     public static final String METHOD_GET_TX_FAILURE_FEE = "get_tx_failure_fee";
     public static final String METHOD_GET_TX_FLOOR_FEE = "get_tx_floor_fee";
@@ -63,13 +63,10 @@ public class GovernanceService {
         huobi.register(eventRegistry);
     }
 
-    public String get_admin_address() throws IOException {
+    public String get_admin() throws IOException {
         String statusList =
                 huobi.queryService(
-                        SERVICE_NAME,
-                        METHOD_GET_ADMIN_ADDRESS,
-                        null,
-                        new TypeReference<String>() {});
+                        SERVICE_NAME, METHOD_GET_ADMIN, null, new TypeReference<String>() {});
         return statusList;
     }
 

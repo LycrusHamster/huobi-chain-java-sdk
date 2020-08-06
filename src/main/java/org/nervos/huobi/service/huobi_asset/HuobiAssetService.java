@@ -9,12 +9,14 @@ import org.nervos.huobi.Huobi;
 import org.nervos.huobi.service.huobi_asset.type.*;
 import org.nervos.muta.EventRegisterEntry;
 import org.nervos.muta.client.type.ParsedEvent;
+import org.nervos.muta.client.type.primitive.Address;
 import org.nervos.muta.service.asset.type.ApproveEvent;
 
 @Getter
 public class HuobiAssetService {
     public static final String SERVICE_NAME = "asset";
     public static final String METHOD_GET_NATIVE_ASSET = "get_native_asset";
+    public static final String METHOD_GET_ADMIN = "get_admin";
     public static final String METHOD_GET_ASSET = "get_asset";
     public static final String METHOD_GET_BALANCE = "get_balance";
     public static final String METHOD_GET_ALLOWANCE = "get_allowance";
@@ -173,5 +175,11 @@ public class HuobiAssetService {
                 relayAssetPayload,
                 new TypeReference<Void>() {},
                 events);
+    }
+
+    public Address get_admin() throws IOException {
+        Address address =
+                huobi.queryService(SERVICE_NAME, METHOD_GET_ADMIN, new TypeReference<Address>() {});
+        return address;
     }
 }

@@ -11,6 +11,7 @@ import org.nervos.huobi.service.admission_control.type.NewAdmin;
 import org.nervos.huobi.service.admission_control.type.StatusList;
 import org.nervos.muta.EventRegisterEntry;
 import org.nervos.muta.client.type.ParsedEvent;
+import org.nervos.muta.client.type.primitive.Address;
 
 @Getter
 public class AdmissionControlService {
@@ -19,6 +20,7 @@ public class AdmissionControlService {
     public static final String METHOD_CHANGE_ADMIN = "change_admin";
     public static final String METHOD_FORBID = "forbid";
     public static final String METHOD_PERMIT = "permit";
+    public static final String METHOD_GET_ADMIN = "get_admin";
     public static final String EVENT_CHANGE_ADMIN = "ChangeAdmin";
     public static final String EVENT_FORBID = "Forbid";
     public static final String EVENT_PERMIT = "Permit";
@@ -64,5 +66,11 @@ public class AdmissionControlService {
     public void permit(AddressList addressList, List<ParsedEvent<?>> events) throws IOException {
         huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_PERMIT, addressList, new TypeReference<Void>() {}, events);
+    }
+
+    public Address get_admin() throws IOException {
+        Address address =
+                huobi.queryService(SERVICE_NAME, METHOD_GET_ADMIN, new TypeReference<Address>() {});
+        return address;
     }
 }

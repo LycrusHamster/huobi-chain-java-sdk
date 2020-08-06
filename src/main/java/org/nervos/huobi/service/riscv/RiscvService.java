@@ -8,11 +8,13 @@ import lombok.Getter;
 import org.nervos.huobi.Huobi;
 import org.nervos.huobi.service.riscv.type.*;
 import org.nervos.muta.EventRegisterEntry;
+import org.nervos.muta.client.type.primitive.Address;
 
 @Getter
 public class RiscvService {
     public static final String SERVICE_NAME = "riscv";
     public static final String METHOD_CALL = "call";
+    public static final String METHOD_GET_ADMIN = "get_admin";
     public static final String METHOD_CHECK_DEPLOY_AUTH = "check_deploy_auth";
     public static final String METHOD_GET_CONTRACT = "get_contract";
     public static final String METHOD_EXEC = "exec";
@@ -108,5 +110,11 @@ public class RiscvService {
     public void revoke_contracts(AddressList addressList) throws IOException {
         huobi.sendTransactionAndPollResult(
                 SERVICE_NAME, METHOD_REVOKE_CONTRACTS, addressList, new TypeReference<Void>() {});
+    }
+
+    public Address get_admin() throws IOException {
+        Address address =
+                huobi.queryService(SERVICE_NAME, METHOD_GET_ADMIN, new TypeReference<Address>() {});
+        return address;
     }
 }
