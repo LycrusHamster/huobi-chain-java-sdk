@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.nervos.huobi.Huobi;
+import org.nervos.huobi.service.governance.GovernanceService;
 import org.nervos.huobi.service.governance.type.ConsumedTxFee;
 import org.nervos.huobi.service.huobi_asset.HuobiAssetService;
 import org.nervos.huobi.service.huobi_asset.type.*;
@@ -29,6 +30,9 @@ public class HuobiAssetServiceTest {
     private static Account admin =
             Account.fromHexString(
                     "0x0000000000000000000000000000000000000000000000000000000000000001");
+    private static Account someOneElse =
+            Account.fromHexString(
+                    "0x0000000000000000000000000000000000000000000000000000000000000002");
     private static HuobiAssetService huobiAssetService =
             new HuobiAssetService(
                     new Huobi(
@@ -74,7 +78,7 @@ public class HuobiAssetServiceTest {
                         .anyMatch(
                                 parsedEvent ->
                                         parsedEvent.isMatch(
-                                                HuobiAssetService.SERVICE_NAME,
+                                                GovernanceService.SERVICE_NAME,
                                                 ConsumedTxFee.name)));
     }
 
@@ -97,12 +101,31 @@ public class HuobiAssetServiceTest {
                         .anyMatch(
                                 parsedEvent ->
                                         parsedEvent.isMatch(
-                                                HuobiAssetService.SERVICE_NAME,
+                                                GovernanceService.SERVICE_NAME,
                                                 ConsumedTxFee.name)));
 
         GetBalanceResponse getBalanceResponse =
                 huobiAssetService.get_balance(new GetBalancePayload(asset_id, admin.getAddress()));
 
         Assertions.assertEquals(getBalanceResponse.getBalance(), U64.fromLong(2000));
+    }
+
+    @Test
+    @Order(3)
+    public void approveAsset() throws IOException {
+        List<ParsedEvent<?>> events = new ArrayList<>();
+
+        huobiAssetService.approve(
+                new ApprovePayload(
+                        asset_id, someOneElse.getAddress(), U64.fromLong(100), "test approve"),
+                events);
+
+        Assertions.assertTrue(
+                events.stream()
+                        .anyMatch(
+                                parsedEvent ->
+                                        parsedEvent.isMatch(
+                                                GovernanceService.SERVICE_NAME,
+                                                ConsumedTxFee.name)));
     }
 }
