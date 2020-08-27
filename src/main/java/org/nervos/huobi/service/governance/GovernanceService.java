@@ -9,12 +9,16 @@ import org.nervos.huobi.Huobi;
 import org.nervos.huobi.service.governance.type.*;
 import org.nervos.muta.EventRegisterEntry;
 import org.nervos.muta.client.type.ParsedEvent;
+import org.nervos.muta.client.type.primitive.Address;
 
 @Getter
 public class GovernanceService {
     public static final String SERVICE_NAME = "governance";
     public static final String METHOD_GET_ADMIN = "get_admin";
     public static final String METHOD_GET_GOVERN_INFO = "get_govern_info";
+    public static final String METHOD_GET_MINER_PROFIT_OUTLET_ADDRESS =
+            "get_miner_profit_outlet_address";
+    public static final String METHOD_GET_MINER_CHARGE_MAP = "get_miner_charge_map";
     public static final String METHOD_GET_TX_FAILURE_FEE = "get_tx_failure_fee";
     public static final String METHOD_GET_TX_FLOOR_FEE = "get_tx_floor_fee";
     public static final String METHOD_SET_ADMIN = "set_admin";
@@ -78,6 +82,26 @@ public class GovernanceService {
                         null,
                         new TypeReference<GovernanceInfo>() {});
         return governanceInfo;
+    }
+
+    public Address get_miner_profit_outlet_address() throws IOException {
+        Address miner_profit_outlet_address =
+                huobi.queryService(
+                        SERVICE_NAME,
+                        METHOD_GET_MINER_PROFIT_OUTLET_ADDRESS,
+                        null,
+                        new TypeReference<Address>() {});
+        return miner_profit_outlet_address;
+    }
+
+    public List<MinerChargeConfig> get_miner_charge_map() throws IOException {
+        List<MinerChargeConfig> miner_charge_map =
+                huobi.queryService(
+                        SERVICE_NAME,
+                        METHOD_GET_MINER_CHARGE_MAP,
+                        null,
+                        new TypeReference<List<MinerChargeConfig>>() {});
+        return miner_charge_map;
     }
 
     public String get_tx_failure_fee() throws IOException {

@@ -1,6 +1,6 @@
 package org.nervos.huobi.service.governance.type;
 
-import java.util.Vector;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import org.nervos.muta.client.type.primitive.ValidatorExtend;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateMetadataEvent {
-    private Vector<ValidatorExtend> verifier_list;
+    private List<ValidatorExtend> verifier_list;
     private U64 interval;
     private U64 propose_ratio;
     private U64 prevote_ratio;

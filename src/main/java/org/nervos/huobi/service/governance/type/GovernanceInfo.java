@@ -1,6 +1,6 @@
 package org.nervos.huobi.service.governance.type;
 
-import java.util.Vector;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +15,6 @@ public class GovernanceInfo {
     private U64 tx_failure_fee;
     private U64 tx_floor_fee;
     private U64 profit_deduct_rate_per_million;
-    private Vector<DiscountLevel> tx_fee_discount;
+    private List<DiscountLevel> tx_fee_discount;
     private U64 miner_benefit;
 }
