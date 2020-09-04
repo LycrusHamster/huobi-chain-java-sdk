@@ -128,4 +128,42 @@ public class HuobiAssetServiceTest {
                                                 GovernanceService.SERVICE_NAME,
                                                 ConsumedTxFee.name)));
     }
+
+    @Test
+    @Order(4)
+    public void transfer() throws IOException {
+        List<ParsedEvent<?>> events = new ArrayList<>();
+
+        huobiAssetService.transfer(
+                new TransferPayload(
+                        asset_id, someOneElse.getAddress(), U64.fromLong(1000), "test approve"),
+                events);
+        GetBalanceResponse getBalanceResponse_admin =
+                huobiAssetService.get_balance(new GetBalancePayload(asset_id, admin.getAddress()));
+        Assertions.assertEquals(U64.fromLong(1000), getBalanceResponse_admin.getBalance());
+
+        GetBalanceResponse getBalanceResponse_someone =
+                huobiAssetService.get_balance(
+                        new GetBalancePayload(asset_id, someOneElse.getAddress()));
+        Assertions.assertEquals(U64.fromLong(1000), getBalanceResponse_someone.getBalance());
+    }
+
+    @Test
+    @Order(5)
+    public void burnAsset() throws IOException {
+        List<ParsedEvent<?>> events = new ArrayList<>();
+
+        huobiAssetService.burn(
+                new BurnAssetPayload(
+                        asset_id, U64.fromLong(1500), Hex.fromHexString("0x00"), "test approve"),
+                events);
+
+        GetBalanceResponse getBalanceResponse =
+                huobiAssetService.get_balance(new GetBalancePayload(asset_id, admin.getAddress()));
+
+        System.out.println(getBalanceResponse.getBalance());
+
+        Asset result = huobiAssetService.get_asset(new GetAssetPayload(asset_id));
+        System.out.println(result.getSupply());
+    }
 }
